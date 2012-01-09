@@ -41,8 +41,15 @@ abstract class Kohana_Kotwilio {
 	 *
 	 *
 	 */
-	public function sms($from, $to, $body) {
-		return $this->_twilio->account->sms_messages->create($from, $to, $body);
+	public function sms($from, $to, $body, $status_callback = null, $application_sid = null) {
+		$params = array();
+		if ($status_callback !== null) {
+			$params['StatusCallback'] = $status_callback;
+		}
+		if ($application_sid !== null) {
+			$params['ApplicationSid'] = $application_sid;
+		}
+		return $this->_twilio->account->sms_messages->create($from, $to, $body, $params);
 	}
 
 }
